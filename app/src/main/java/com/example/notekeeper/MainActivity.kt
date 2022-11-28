@@ -1,11 +1,9 @@
 package com.example.notekeeper
 
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.navigation.ui.AppBarConfiguration
@@ -30,20 +28,6 @@ class MainActivity : AppCompatActivity() {
         val adapterCourses = ArrayAdapter(this, android.R.layout.simple_spinner_item, dm.courses.values.toList())
         adapterCourses.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerCourses.adapter = adapterCourses
-
-        btnDone.setOnClickListener {
-            if (TextUtils.isEmpty(textNoteTitle.text.toString())) {
-                textNoteTitle.error = "Please fill out this field!"
-                textNoteTitle.requestFocus()
-            }
-            else if (TextUtils.isEmpty(textNoteText.text.toString())) {
-                textNoteText.error = "Please fill out this field!"
-                textNoteText.requestFocus()
-            }
-            else {
-                Toast.makeText(applicationContext, "Unfortunately, this feature is unavailable", Toast.LENGTH_LONG).show()
-            }
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
