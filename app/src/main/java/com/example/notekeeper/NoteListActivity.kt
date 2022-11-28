@@ -1,11 +1,11 @@
 package com.example.notekeeper
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.navigation.ui.AppBarConfiguration
 import com.example.notekeeper.databinding.ActivityNoteListBinding
-import com.google.android.material.snackbar.Snackbar
 
 class NoteListActivity : AppCompatActivity() {
 
@@ -21,10 +21,9 @@ class NoteListActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAnchorView(R.id.fab)
-                .setAction("Action", null).show()
+        binding.fab.setOnClickListener {
+            val activityIntent = Intent(this, MainActivity::class.java)
+            startActivity(activityIntent)
         }
     }
 }
