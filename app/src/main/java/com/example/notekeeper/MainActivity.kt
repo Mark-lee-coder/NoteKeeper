@@ -29,7 +29,9 @@ class MainActivity : AppCompatActivity() {
         adapterCourses.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerCourses.adapter = adapterCourses
 
-        notePosition = intent.getIntExtra(EXTRA_NOTE_POSITION, POSITION_NOT_SET)
+        /*if the first part before the elvis operator(?:) else the second part after the ?:*/
+        /**checks if the activity has been destroyed and recreated first otherwise performs the intent*/
+        notePosition = savedInstanceState?.getInt(NOTE_POSITION, POSITION_NOT_SET)?:intent.getIntExtra(NOTE_POSITION, POSITION_NOT_SET)
 
         if (notePosition != POSITION_NOT_SET) {
             displayNote()
@@ -38,6 +40,12 @@ class MainActivity : AppCompatActivity() {
           DataManager.notes.add(NoteInfo())//adds the new note to our notes collection
           notePosition = DataManager.notes.lastIndex//new note is added to the last index
         }
+    }
+
+    /**the note index will note be reset in case the activity is killed for example by changing from portrait to landscape*/
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(NOTE_POSITION, notePosition)
     }
 
     private fun displayNote() {
@@ -66,6 +74,10 @@ class MainActivity : AppCompatActivity() {
                 moveNext()
                 true
             }
+            R.id.action_back -> {
+                movePrevious()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -76,6 +88,12 @@ class MainActivity : AppCompatActivity() {
         invalidateOptionsMenu()//called when the user gets to the end of the note
     }
 
+    private fun movePrevious() {
+        --notePosition
+        displayNote()
+        invalidateOptionsMenu()
+    }
+
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         /**if statement to check if we have reached the last index in the list*/
         if (notePosition >= DataManager.notes.lastIndex) {
@@ -83,6 +101,13 @@ class MainActivity : AppCompatActivity() {
             /**if the menuItem is not null, change the next icon to block icon*/
             if (menuItem != null) {
                 menuItem.icon = getDrawable(R.drawable.ic_baseline_block_24)//changes forward arrow to block arrow at the end of the list
+                menuItem.isEnabled = false
+            }
+        }
+        else if (notePosition.equals(DataManager.notes.first())) {
+            val menuItem = menu?.findItem(R.id.action_back)
+            if (menuItem != null) {
+                menuItem.icon = getDrawable(R.drawable.ic_baseline_block_24)
                 menuItem.isEnabled = false
             }
         }
