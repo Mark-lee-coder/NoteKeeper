@@ -34,6 +34,10 @@ class MainActivity : AppCompatActivity() {
         if (notePosition != POSITION_NOT_SET) {
             displayNote()
         }
+        else {
+          DataManager.notes.add(NoteInfo())//adds the new note to our notes collection
+          notePosition = DataManager.notes.lastIndex//new note is added to the last index
+        }
     }
 
     private fun displayNote() {
@@ -83,5 +87,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        saveNote()
+    }
+
+    private fun saveNote() {
+        /**saving content from the screen into the note within our DataManager*/
+        val note = DataManager.notes[notePosition]//gets the position of our currently displayed note
+        note.title = textNoteTitle.text.toString()//takes the string value of the title that is displayed and assign it to the notes title property
+        note.text = textNoteText.text.toString()
+        note.course = spinnerCourses.selectedItem as CourseInfo//gives a reference to the selected course and casts it to CourseInfo
+
     }
 }
