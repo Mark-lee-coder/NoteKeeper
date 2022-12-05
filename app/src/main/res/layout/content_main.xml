@@ -30,7 +30,6 @@
         android:hint="@string/enter_note_title"
         android:inputType="textMultiLine"
         android:minHeight="48dp"
-        android:textColor="@color/magenta"
         android:textColorHint="#8D6E63"
         app:layout_constraintEnd_toEndOf="@+id/spinnerCourses"
         app:layout_constraintHorizontal_bias="0.465"

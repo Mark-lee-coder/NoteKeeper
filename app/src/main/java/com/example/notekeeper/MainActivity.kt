@@ -37,9 +37,13 @@ class MainActivity : AppCompatActivity() {
             displayNote()
         }
         else {
-          DataManager.notes.add(NoteInfo())//adds the new note to our notes collection
-          notePosition = DataManager.notes.lastIndex//new note is added to the last index
+            createNewNote()
         }
+    }
+
+    private fun createNewNote() {
+        DataManager.notes.add(NoteInfo())//adds the new note to our notes collection
+        notePosition = DataManager.notes.lastIndex//new note is added to the last index
     }
 
     /**the note index will note be reset in case the activity is killed for example by changing from portrait to landscape*/
