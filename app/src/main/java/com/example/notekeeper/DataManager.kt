@@ -1,5 +1,7 @@
 package com.example.notekeeper
 
+import java.util.*
+
 object DataManager {
     val courses = HashMap<String, CourseInfo>() //maps string instances of CourseInfo and assigns them to courses property
     val notes = ArrayList<NoteInfo>() //an arraylist that holds NoteInfo references and assigns them to notes property
