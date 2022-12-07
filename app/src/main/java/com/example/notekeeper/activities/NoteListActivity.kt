@@ -1,12 +1,15 @@
-package com.example.notekeeper
+package com.example.notekeeper.activities
 
-import android.R
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.notekeeper.DataManager
+import com.example.notekeeper.activities.MainActivity
+import com.example.notekeeper.adapters.NoteRecyclerAdapter
 import com.example.notekeeper.databinding.ActivityNoteListBinding
 import kotlinx.android.synthetic.main.content_note_list.*
 
@@ -29,16 +32,12 @@ class NoteListActivity : AppCompatActivity() {
             startActivity(activityIntent)
         }
 
-        listNotes.adapter = ArrayAdapter(this, R.layout.simple_list_item_1, DataManager.notes)
-        listNotes.setOnItemClickListener { parent, view, position, id ->
-            val activityIntent = Intent(this, MainActivity::class.java)
-            activityIntent.putExtra(NOTE_POSITION, position)
-            startActivity(activityIntent)
-        }
+        listItems.layoutManager = LinearLayoutManager(this)//associates a layout manager with our recycler view
+        listItems.adapter = NoteRecyclerAdapter(this, DataManager.notes)//connects the NoteRecyclerAdapter class to the RecyclerView
     }
 
     override fun onResume() {
         super.onResume()
-        (listNotes.adapter as ArrayAdapter<NoteInfo>).notifyDataSetChanged()
+        listItems.adapter?.notifyDataSetChanged()
     }
 }

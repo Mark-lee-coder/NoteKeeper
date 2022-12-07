@@ -1,4 +1,4 @@
-package com.example.notekeeper
+package com.example.notekeeper.activities
 
 import android.os.Bundle
 import android.view.Menu
@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.navigation.ui.AppBarConfiguration
+import com.example.notekeeper.*
 import com.example.notekeeper.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.content_main.*
 
@@ -31,7 +32,9 @@ class MainActivity : AppCompatActivity() {
 
         /*if the first part before the elvis operator(?:) else the second part after the ?:*/
         /**checks if the activity has been destroyed and recreated first otherwise performs the intent*/
-        notePosition = savedInstanceState?.getInt(NOTE_POSITION, POSITION_NOT_SET)?:intent.getIntExtra(NOTE_POSITION, POSITION_NOT_SET)
+        notePosition = savedInstanceState?.getInt(NOTE_POSITION, POSITION_NOT_SET)?:intent.getIntExtra(
+            NOTE_POSITION, POSITION_NOT_SET
+        )
 
         if (notePosition != POSITION_NOT_SET) {
             displayNote()
